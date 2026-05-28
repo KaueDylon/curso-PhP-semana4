@@ -65,4 +65,12 @@ class TarefaRepository
 
         return $tarefas;
     }
+
+    public function deletarTarefa(int $id): void
+    {
+        $stmt = $this->PDO->prepare(
+            "DELETE from tarefa WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+
+    }
 }

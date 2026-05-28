@@ -13,3 +13,4 @@ $router->post('/tarefas', [TarefaController::class, 'criarTarefa']);
 $router->get('/tarefas', [TarefaController::class, 'listarTarefas']);
 $router->get('/tarefas/{id}', [TarefaController::class, 'listarTarefasID']);
 $router->get('/tarefas/filtro', [TarefaController::class, 'listarTarefasFiltradas']);
+$router->delete('/tarefas/delete/{id}', [TarefaController::class, 'deletarTarefa']);

@@ -33,4 +33,9 @@ class TarefaController
         return $this->service->listarTarefasID($params);
     }
 
+    public function deletarTarefa(array $params = [], array $body = [], array $queryParams = []): array
+    {
+        return $this->service->deletarTarefa($params);
+    }
+
 }

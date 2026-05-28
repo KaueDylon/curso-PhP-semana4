@@ -146,4 +146,34 @@ class TarefaService
 
     }
 
+    public function deletarTarefa(array $params): array
+    {
+
+        $id = filter_var($params['id'] ?? null, FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            $this->log->warning("ID da tarefa não é um número inteiro.");
+            $erros[] = 'ID da tarefa inserido não é um número.';
+        }
+
+        $tarefa = $this->repository->verTatefaPorID($id);
+
+        if(empty($tarefa)){
+            http_response_code(200);
+            return [
+                'sucesso' => true,
+                'info' => 'Nenhuma tarefa com este ID foi encontrado.'
+            ];
+        }
+
+        $this->repository->deletarTarefa($id);
+
+        http_response_code(200);
+        return [
+            'sucesso' => true,
+            'info' => 'Tarefa deletada com sucesso.'
+        ];
+
+    }
+
 }
