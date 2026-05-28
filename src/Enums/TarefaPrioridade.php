@@ -13,10 +13,10 @@ enum TarefaPrioridade: string
     public function label(): string
     {
         return match($this){
-            self::BAIXA => 'Baixa',
-            self::MEDIA => 'Media',
-            self::ALTA => 'Alta',
-            self::URGENTE => 'Urgente',
+            self::BAIXA => 'BAIXA',
+            self::MEDIA => 'MEDIA',
+            self::ALTA => 'ALTA',
+            self::URGENTE => 'URGENTE',
         };
     }
 

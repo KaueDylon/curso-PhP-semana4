@@ -11,9 +11,9 @@ enum TarefaStatus: string
     public function label(): string
     {
         return match($this){
-            self::EMPROGRESSO => 'Em Progresso',
-            self::PENDENTE => 'Pendente',
-            self::CONCLUIDA => 'Concluída',
+            self::EMPROGRESSO => 'EM PROGRESSO',
+            self::PENDENTE => 'PENDENTE',
+            self::CONCLUIDA => 'CONCLUIDA',
         };
 
     }

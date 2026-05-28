@@ -9,6 +9,7 @@ use Todoitapi\App\Model\TarefaModel;
 class TarefaRepository
 {
     private PDO $PDO;
+
     public function __construct()
     {
         $this->PDO = Database::getConnection();
@@ -32,8 +33,26 @@ class TarefaRepository
         return $tarefas;
     }
 
-    public function verTarefasFiltradas(string $filtro): array
+    public function verTarefasFiltradas(?string $status, ?string $prioridade): array
     {
-        $stmt = $this->PDO->prepare("SELECT * FROM tarefa WHERE :filtro");
+        $qry = "SELECT * FROM tarefa WHERE 1=1";
+        $params = [];
+
+        if (!empty($status)) {
+            $qry .= " AND status = :status";
+            $params['status'] = $status;
+        }
+
+        if (!empty($prioridade)) {
+            $qry .= " AND prioridade = :prioridade";
+            $params['prioridade'] = $prioridade;
+        }
+
+        $stmt = $this->PDO->prepare($qry);
+        $stmt->execute($params);
+
+        $tarefas = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+
+        return $tarefas;
     }
 }

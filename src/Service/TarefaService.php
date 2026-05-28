@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Todoitapi\App\Service;
 
 use Todoitapi\App\Enums\TarefaPrioridade;
-use Todoitapi\App\Enums\TarefaStatus;
 use Todoitapi\App\Model\TarefaModel;
 use Monolog\Logger;
 use Todoitapi\App\Repository\TarefaRepository;
@@ -64,7 +63,6 @@ class TarefaService
         $tarefa = new TarefaModel($nome, $descricao, $prioridade);
         $this->repository->criarTarefas($tarefa);
 
-
         return [
             'sucesso' => true,
             'info' => 'Tarefa criada com sucesso.'
@@ -74,8 +72,20 @@ class TarefaService
 
     public function listarTarefasFiltro(array $queryParams): array
     {
-        $nome = $body['nome'] ?? null;
-        $descricao = $body['descricao'] ?? null;
+        $status = mb_strtoupper($queryParams['status'] ?? null);
+        $prioridade = mb_strtoupper($queryParams['prioridade'] ?? null);
+
+
+        if (empty($prioridade)) {
+            $this->log->warning("Não foi inserido nenhum filtro de prioridade na queryParams.");
+        }
+
+        if (empty($status)) {
+            $this->log->warning("Não foi inserido nenhum filtro de status na queryParams.");
+        }
+
+        return $this->repository->verTarefasFiltradas($status, $prioridade);
+
     }
 
     public function listarTarefas(): array
