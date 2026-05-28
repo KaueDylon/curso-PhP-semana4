@@ -64,6 +64,7 @@ class TarefaService
         $this->repository->criarTarefas($tarefa);
 
         return [
+            http_response_code(200),
             'sucesso' => true,
             'info' => 'Tarefa criada com sucesso.'
         ];
@@ -88,6 +89,42 @@ class TarefaService
 
     }
 
+    public function listarTarefasID(array $params)
+    {
+
+        $id = filter_var($params['id'] ?? null, FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            $this->log->warning("ID da tarefa não é um número inteiro.");
+            $erros[] = 'ID da tarefa inserido não é um número.';
+        }
+
+        if (!empty($erros)) {
+            http_response_code(400);
+            return [
+                'sucesso' => false,
+                'info' => $erros
+            ];
+        }
+
+        $tarefa = $this->repository->verTatefaPorID($id);
+
+        if(empty($tarefa)){
+            http_response_code(200);
+            return [
+                'sucesso' => true,
+                'info' => 'Nenhuma tarefa com este ID foi encontrado.'
+            ];
+        }
+
+        return [
+            http_response_code(200),
+            'sucesso' => true,
+            'info' => $tarefa
+        ];
+
+    }
+
     public function listarTarefas(): array
     {
         $tarefas = $this->repository->verTarefas();
@@ -95,12 +132,14 @@ class TarefaService
         if(empty($tarefas)){
 
             return [
+                http_response_code(200),
                 'sucesso' => true,
                 'info' => 'Nenhuma tarefa disponível para ser listada.',
             ];
         }
 
         return [
+            http_response_code(200),
             'sucesso' => true,
             'info' => $tarefas,
         ];

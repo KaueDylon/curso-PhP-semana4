@@ -11,4 +11,5 @@ use Todoitapi\App\Controller\TarefaController;
 
 $router->post('/tarefas', [TarefaController::class, 'criarTarefa']);
 $router->get('/tarefas', [TarefaController::class, 'listarTarefas']);
+$router->get('/tarefas/{id}', [TarefaController::class, 'listarTarefasID']);
 $router->get('/tarefas/filtro', [TarefaController::class, 'listarTarefasFiltradas']);

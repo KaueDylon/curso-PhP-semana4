@@ -28,5 +28,9 @@ class TarefaController
         return $this->service->listarTarefasFiltro($queryParams);
     }
 
+    public function listarTarefasID(array $params = [], array $body = [], array $queryParams = []): array
+    {
+        return $this->service->listarTarefasID($params);
+    }
 
 }

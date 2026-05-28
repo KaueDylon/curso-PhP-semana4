@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Todoitapi\App\Repository;
 
 use PDO;
@@ -31,6 +32,15 @@ class TarefaRepository
         $tarefas = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 
         return $tarefas;
+    }
+
+    public function verTatefaPorID($id): array
+    {
+        $stmt = $this->PDO->prepare("SELECT * FROM tarefa WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+
+        $tarefa = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
+        return $tarefa;
     }
 
     public function verTarefasFiltradas(?string $status, ?string $prioridade): array
