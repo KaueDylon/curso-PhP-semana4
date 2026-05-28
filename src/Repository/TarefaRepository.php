@@ -36,6 +36,7 @@ class TarefaRepository
 
     public function verTatefaPorID($id): array
     {
+        echo($id);
         $stmt = $this->PDO->prepare("SELECT * FROM tarefa WHERE id = :id");
         $stmt->execute([':id' => $id]);
 
@@ -69,8 +70,17 @@ class TarefaRepository
     public function deletarTarefa(int $id): void
     {
         $stmt = $this->PDO->prepare(
-            "DELETE from tarefa WHERE id = :id");
+            'DELETE from tarefa WHERE id = :id');
         $stmt->execute([':id' => $id]);
 
+    }
+
+    public function editarTarefa(TarefaModel $tarefaModel): void
+    {
+        $stmt = $this->PDO->prepare('UPDATE tarefa SET 
+                    nome = :nome, descricao = :descricao, prioridade = :prioridade, status = :status
+                    WHERE id = :id');
+
+        $stmt->execute($tarefaModel->toArrayID());
     }
 }

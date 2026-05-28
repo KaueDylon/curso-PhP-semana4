@@ -5,10 +5,10 @@ namespace Todoitapi\App\Enums;
 
 enum TarefaPrioridade: string
 {
-    case BAIXA = 'baixa';
-    case MEDIA = 'media';
-    case ALTA = 'alta';
-    case URGENTE = 'urgente';
+    case BAIXA = 'BAIXA';
+    case MEDIA = 'MEDIA';
+    case ALTA = 'ALTA';
+    case URGENTE = 'URGENTE';
 
     public function label(): string
     {

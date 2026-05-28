@@ -38,4 +38,9 @@ class TarefaController
         return $this->service->deletarTarefa($params);
     }
 
+    public function editarTarefa(array $params = [], array $body = [], array $queryParams = []): array
+    {
+        return $this->service->editarTarefa($params, $body);
+    }
+
 }

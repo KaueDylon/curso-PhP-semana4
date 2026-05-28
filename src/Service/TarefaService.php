@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Todoitapi\App\Service;
 
 use Todoitapi\App\Enums\TarefaPrioridade;
+use Todoitapi\App\Enums\TarefaStatus;
 use Todoitapi\App\Model\TarefaModel;
 use Monolog\Logger;
 use Todoitapi\App\Repository\TarefaRepository;
@@ -172,6 +173,52 @@ class TarefaService
         return [
             'sucesso' => true,
             'info' => 'Tarefa deletada com sucesso.'
+        ];
+
+    }
+
+    public function editarTarefa(array $params, array $body): array
+    {
+        $id = filter_var($params['id'] ?? null, FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            $this->log->warning("ID da tarefa não é um número inteiro.");
+            $erros[] = 'ID da tarefa inserido não é um número.';
+        }
+
+        $edt = $this->repository->verTatefaPorID($id);
+
+        if(empty($edt)){
+            $this->log->warning("Usuário não encontrado para edição.");
+            $erros[] = 'ID informado não trouxe nenhum usuário.';
+        }
+
+
+        if (!empty($erros)) {
+            http_response_code(400);
+            return [
+                'sucesso' => false,
+                'info' => $erros
+            ];
+        }
+
+        $edtNome = $body['nome'] ?? $edt['nome'];
+        $edtDescricao = $body['descricao'] ?? $edt['descricao'];
+        $edtPrioridade = $body['prioridade'] ?? $edt['prioridade'];
+        $edtStatus = $body['status'] ?? $edt['status'];
+
+        $tarefaEditar = new TarefaModel($edtNome,
+                                        $edtDescricao,
+                                        TarefaPrioridade::from(mb_strtoupper($edtPrioridade)),
+                                        TarefaStatus::from(mb_strtoupper($edtStatus)),
+                                        $id);
+
+
+        $this->repository->editarTarefa($tarefaEditar);
+
+        return [
+            'sucesso' => true,
+            'info' => 'Usuário editado com sucesso.'
         ];
 
     }

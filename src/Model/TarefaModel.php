@@ -28,6 +28,17 @@ class TarefaModel
 
         ];
     }
+    public function toArrayID(): array
+    {
+        return[
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'descricao' => $this->descricao,
+            'prioridade' => $this->prioridade->label(),
+            'status' => $this->status->label(),
+
+        ];
+    }
 
     public function getNome(): string
     {
