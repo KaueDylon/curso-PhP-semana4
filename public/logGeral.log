@@ -19,3 +19,5 @@
 [2026-05-28T19:15:32.536050+02:00] logGeral.WARNING: ID da tarefa não é um número inteiro. [] []
 [2026-05-28T19:15:32.538728+02:00] logGeral.WARNING: Usuário não encontrado para edição. [] []
 [2026-05-28T19:37:15.900738+02:00] logGeral.WARNING: Usuário não encontrado para edição. [] []
+[2026-05-29T15:39:12.276092+02:00] logGeral.WARNING: Não foi inserida um tipo de prioridade correto na req. [] []
+[2026-05-29T15:39:21.391080+02:00] logGeral.WARNING: Não foi inserida um tipo de prioridade correto na req. [] []

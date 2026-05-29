@@ -14,5 +14,10 @@
     "require-dev": {
         "phpunit/phpunit": "*",
         "phpstan/phpstan": "*"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests/"
+        }
     }
 }

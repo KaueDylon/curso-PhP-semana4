@@ -5,6 +5,7 @@ namespace Todoitapi\App\Http;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Todoitapi\App\Repository\TarefaRepository;
 use Todoitapi\App\Service\TarefaService;
 
 class Router
@@ -51,8 +52,9 @@ class Router
                     [$class, $method] = $handler;
 
                     $log = new Logger('logGeral');
+                    $repository = new TarefaRepository();
                     $log->pushHandler(new StreamHandler(__DIR__.'/../../public/logGeral.log'));
-                    $service = new TarefaService($log);
+                    $service = new TarefaService($log, $repository);
                     $controller = new $class($service);
                     echo json_encode($controller->$method($params, $body, $queryParams), JSON_THROW_ON_ERROR);
                 } else {
