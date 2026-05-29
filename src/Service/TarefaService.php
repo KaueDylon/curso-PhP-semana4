@@ -11,12 +11,12 @@ use Todoitapi\App\Repository\TarefaRepository;
 
 class TarefaService
 {
+
     private TarefaRepository $repository;
     private Logger $log;
-
-    public function __construct(Logger $log)
+    public function __construct(Logger $log, TarefaRepository $repository)
     {
-        $this->repository = new TarefaRepository();
+        $this->repository = $repository;
         $this->log = $log;
     }
 
@@ -40,14 +40,14 @@ class TarefaService
 
         if (!empty($prioridade)) {
             $prioridadeEnum = TarefaPrioridade::tryFrom(
-                mb_strtolower($prioridade)
+                mb_strtoupper($prioridade)
             );
             if ($prioridadeEnum === null) {
                 $this->log->warning("Não foi inserida um tipo de prioridade correto na req.");
                 $erros[] = 'Campo prioridade com tipo inválido.';
             } else {
                 $prioridade = TarefaPrioridade::tryFrom(
-                    mb_strtolower($prioridade));
+                    mb_strtoupper($prioridade));
             }
         } else {
             $prioridade = TarefaPrioridade::BAIXA;
@@ -64,8 +64,8 @@ class TarefaService
         $tarefa = new TarefaModel($nome, $descricao, $prioridade);
         $this->repository->criarTarefas($tarefa);
 
+        http_response_code(200);
         return [
-            http_response_code(200),
             'sucesso' => true,
             'info' => 'Tarefa criada com sucesso.'
         ];
@@ -118,8 +118,8 @@ class TarefaService
             ];
         }
 
+        http_response_code(200);
         return [
-            http_response_code(200),
             'sucesso' => true,
             'info' => $tarefa
         ];
@@ -132,15 +132,15 @@ class TarefaService
 
         if(empty($tarefas)){
 
+            http_response_code(200);
             return [
-                http_response_code(200),
                 'sucesso' => true,
                 'info' => 'Nenhuma tarefa disponível para ser listada.',
             ];
         }
 
+        http_response_code(200);
         return [
-            http_response_code(200),
             'sucesso' => true,
             'info' => $tarefas,
         ];
